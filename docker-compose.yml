@@ -1,0 +1,17 @@
+services:
+  trustvault:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: sqlite:////data/trustvault.db
+      STORAGE_DIR: /data/files
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env}
+      AUDIT_SECRET: ${AUDIT_SECRET:?Set AUDIT_SECRET in .env}
+      ACCESS_TOKEN_MINUTES: 60
+      MAX_UPLOAD_BYTES: 10485760
+    volumes:
+      - trustvault_data:/data
+    restart: unless-stopped
+volumes:
+  trustvault_data:
